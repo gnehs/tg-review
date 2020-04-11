@@ -1,0 +1,12 @@
+
+//songlist
+.songlist-enter, .songlist-leave-to
+	opacity: 0
+	filter: grayscale(100%)
+	transform: scaleY(0) scaleX(0.8)
+	transform-origin: center top
+.songlist-leave-active
+	position: absolute !important
+.songlist-move,.songlist-enter, .songlist-leave-to
+	transition: .5s cubic-bezier(0.59, 0.12, 0.34, 0.95)
+	transition-property: opacity, transform, filter

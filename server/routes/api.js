@@ -13,12 +13,28 @@ router.get('/posts', async (req, res) => {
   res.send(posts)
 });
 router.get('/categories', async (req, res) => {
-  let result = await wp.categories().perPage(100)
+  let result = await wp.categories().perPage(30)
   let categories = {}
   result.map(x => categories[x.id] = x.name)
   res.send(categories)
 });
 
-router.post('/', async (req, res) => {})
+router.post('/post', async (req, res) => {
+  let {
+    action,
+    id
+  } = req.body
+  if (action == 'delete') {
+    await wp.posts().id(id).delete()
+  }
+  if (action == 'publish') {
+    await wp.posts().id(id).update({
+      status: 'publish'
+    })
+  }
+  res.json({
+    success: true
+  })
+})
 router.get('/success', (req, res) => {});
 module.exports = router;
