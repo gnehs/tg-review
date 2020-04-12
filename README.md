@@ -9,6 +9,10 @@
     "endpoint": "https://example.com/wp-json",
     "username": "example",
     "password": "example_Pa$$w0rd"
+  },
+  "auth": {
+    "username": "HTTP_BASIC_AUTH_USERNAME",
+    "password": "HTTP_BASIC_AUTH_PASSWORD"
   }
 }
 ```

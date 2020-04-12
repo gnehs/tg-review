@@ -1,15 +1,19 @@
 <template>
 	<div style="width:500px;margin: 10px auto;">
-		<v-row v-if="data&&data.length>0">
+		<v-row v-show="data&&categories&&data.length>0">
 			<transition-group tag="div" name="songlist" style="position: relative">
 				<template v-for="item of data">
 					<v-col cols="12" :key="item.id">
-						<v-card class="mx-auto" max-width="500">
+						<v-card class="mx-auto" max-width="500" min-width="500">
 							<v-card-text>
 								<div class="overline mb-4">#{{item.id}}</div>
 								<p class="display-1 text--primary">{{item.title.rendered}}</p>
 
-								<v-chip v-for="cat of item.categories" :key="cat">{{categories[cat]}}</v-chip>
+								<v-chip
+									v-for="category of item.categories"
+									class="mr-1"
+									:key="category"
+								>{{categories[category]}}</v-chip>
 								<br />
 								<br />
 								<div class="text--primary" v-html="item.content.rendered" />
@@ -36,13 +40,16 @@
 				</template>
 			</transition-group>
 		</v-row>
-		<div v-else>
+		<div v-show="!loading&&data&&data.length==0">
 			<v-card class="mx-auto" max-width="500">
 				<v-card-text>
 					<p class="display-1 text--primary">空</p>
 					<div class="text--primary">尚無項目可供審核！</div>
 				</v-card-text>
 			</v-card>
+		</div>
+		<div class="text-center" v-show="loading||!data">
+			<v-progress-circular indeterminate color="primary" />
 		</div>
 	</div>
 </template>
@@ -53,17 +60,20 @@ export default {
 		this.fetchData()
 	},
 	data: () => ({
+		loading: true,
 		data: null,
 		categories: null,
 	}),
 	methods: {
 		async fetchData() {
+			this.loading = true
 			this.$axios.get('/api/categories').then(response => {
 				this.categories = response.data;
 			});
 			this.$axios.get('/api/posts').then(response => {
 				this.data = response.data;
 			});
+			this.loading = false
 		},
 		async updatePost(action, id) {
 			this.data = this.data.filter(x => x.id != id)
