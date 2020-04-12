@@ -60,7 +60,7 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: null
+    baseURL: process.env.NODE_ENV === 'production' ? 'https://tg-review.gnehs.net/' : 'http://localhost:3000/'
   },
   /*
    ** vuetify module configuration
