@@ -17,7 +17,7 @@
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
     "helmet": "^3.22.0",
-    "nuxt": "^2.0.0",
+    "nuxt": "^2.15.8",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "wpapi": "^1.2.1"
